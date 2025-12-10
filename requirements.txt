@@ -1,0 +1,4 @@
+crewai[google-genai]
+crewai_tools
+streamlit
+pyautogui
