@@ -1,13 +1,16 @@
 import streamlit as st
 
-from agent import gpu_deals_crew
+from agent import create_instagram_crew
 
-st.title("GPU Deals Crew")
-st.subheader("Find the best GPU deals available online!")
+st.title("Instagram Profile Analyzer")
+st.subheader("Gere um briefing para Landing Page a partir de um perfil do Instagram")
 
-if st.button("Find Deals"):
-    with st.spinner("Searching for the best GPU deals..."):
-        result = gpu_deals_crew.kickoff()
-        deals = result.model_dump()
-    st.success("Here are the best GPU deals we found:")
-    st.write(deals["raw"])
+username = st.text_input("Digite o @ do perfil (sem o @):", placeholder="ex: fulano.oficial")
+
+if st.button("Analisar Perfil", disabled=not username):
+    with st.spinner(f"Analisando o perfil @{username}..."):
+        crew = create_instagram_crew(username.strip())
+        result = crew.kickoff()
+        dados = result.model_dump()
+    st.success(f"Briefing do perfil @{username} gerado com sucesso!")
+    st.markdown(dados["raw"])
